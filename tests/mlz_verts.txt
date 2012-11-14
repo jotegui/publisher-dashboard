@@ -1,0 +1,2 @@
+valores para mlz_verts
+{'georeferencePerc': 21.0, 'speciesCount': 2119, 'kingdomPerc': 99.0, 'scinamePerc': 100.0, 'kingdomCount': 64488, 'yearPerc': 100.0, 'yearCount': 64524, 'scinameCount': 64524, 'datedCount': 64524, 'georeferenceCount': 13928, 'recordCount': 64524, 'basisCount': 64524, 'basisPerc': 100.0, 'datedPerc': 100.0}

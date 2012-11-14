@@ -1,0 +1,19 @@
+application: jot-vertnet-publisher
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /files
+  static_dir: files
+
+- url: /stats
+  static_dir: stats
+
+- url: /.*
+  script: publisherDashboard.app
+
+libraries:
+  - name: jinja2
+    version: latest

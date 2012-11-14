@@ -1,0 +1,160 @@
+<head>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+		{% if yearDistro != [] %}
+			var data = google.visualization.arrayToDataTable([
+				['Year', 'Records', 'Species'],
+				{% for i in yearDistro: %}
+					{% if i[0] != '' %}
+					[ {{ i[0] }} , {{ i[1] }} , {{ i[2] }}],
+					{% endif %}
+				{% endfor %}
+			]);
+
+			var options = {
+				title: 'Cummulative volume of records and species each year',
+				lineWidth: 1,
+				pointSize: 0,
+				hAxis: {
+					maxValue: {{ yearDistro[1][0] }},
+					minValue: {{ yearDistro[-1][0] }},
+					gridlines: {
+						color: 'white',
+						count: 10
+					}
+				}
+			};
+
+			var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		{% endif %}
+		
+		{% if percYearDistro != [] %}
+			var percdata = google.visualization.arrayToDataTable([
+				['Year', 'Records', 'Species'],
+				{% for i in percYearDistro: %}
+					{% if i[0] != '' %}
+					[ {{ i[0] }} , {{ i[1] }} , {{ i[2] }}],
+					{% endif %}
+				{% endfor %}
+			]);
+
+			var percoptions = {
+				title: 'Relative acquisition of records and species each year',
+				lineWidth: 1,
+				pointSize: 0,
+				hAxis: {
+					maxValue: {{ percYearDistro[1][0] }},
+					minValue: {{ percYearDistro[-1][0] }},
+					gridlines: {
+						color: 'white',
+						count: 10
+					}
+				}
+			};
+
+			var percchart = new google.visualization.AreaChart(document.getElementById('percchart_div'));
+			percchart.draw(percdata, percoptions);
+		{% endif %}
+		
+		{% if basisDistro != [] %}
+			var basisdata = google.visualization.arrayToDataTable([
+				['Basis of Record','Records'],
+				{% for i in basisDistro: %}
+				[ '{{ i[0] }}' , {{ i[1] }} ],
+				{% endfor %}
+			]);
+			var basisoptions = {
+				title: 'Records per Basis of Record'
+			}
+			var basischart = new google.visualization.PieChart(document.getElementById('basischart_div'));
+			basischart.draw(basisdata, basisoptions);
+		{% endif %}
+		
+		{% if kingdomDistro != [] %}
+			var kingdomdata = google.visualization.arrayToDataTable([
+				['Kingdom','Records'],
+				{% for i in kingdomDistro: %}
+				[ '{{ i[0] }}' , {{ i[1] }} ],
+				{% endfor %}
+			]);
+			var kingdomoptions = {
+				title: 'Records per Kingdom'
+			}
+			var kingdomchart = new google.visualization.PieChart(document.getElementById('kingdomchart_div'));
+			kingdomchart.draw(kingdomdata, kingdomoptions);
+		{% endif %}
+		
+		{% if countryDistro != [] %}
+			var countrydata = google.visualization.arrayToDataTable([
+				['Country','Records'],
+				{% for i in countryDistro: %}
+				[ '{{ i[0] }}' , {{ i[1] }} ],
+				{% endfor %}
+			]);
+			var countryoptions = {
+				title: 'Records per Country'
+			}
+			var countrychart = new google.visualization.PieChart(document.getElementById('countrychart_div'));
+			countrychart.draw(countrydata, countryoptions);
+		{% endif %}
+		
+		}
+
+	</script>
+</head>
+<h2>Information about the DwC-A: {{ dwca }}</h2>
+<ul>
+	<li>Records: {{ stats['recordCount'] }}</li>
+	<li>Species: {{ stats['speciesCount'] }}</li>
+	<li>Georeferenced records: {{ stats['georeferenceCount'] }} ({{ georeferencePerc }}%)</li>
+	<li>Dated: {{ stats['datedCount'] }} ({{ datedPerc }}%)</li>
+	<li>Records with Kingdom: {{ stats['kingdomCount'] }} ({{ kingdomPerc }}%)</li>
+	<li>Records with Basis: {{ stats['basisCount'] }} ({{ basisPerc }}%)</li>
+	<li>Records with Year: {{ stats['yearCount'] }} ({{ yearPerc }}%)</li>
+	<li>Records with Scientific Name: {{ stats['scinameCount'] }} ({{ scinamePerc }}%)</li>
+</ul>
+<table border="0">
+<tr><td>
+
+<div id="chart_div" style="width: 900px; height: 500px;">
+{% if yearDistro == [] %}
+<h3>No year value found, could not build graphs</h3>
+{% else %}
+{% endif %}
+</div></td></tr><tr><td>
+
+<div id="percchart_div" style="width: 900px; height: 500px;">
+{% if percYearDistro == [] %}
+<h3>Could not build relative data graph</h3>
+{% else %}
+{% endif %}
+
+</div></td></tr><tr><td>
+<div id="basischart_div" style="width: 900px; height: 500px;">
+{% if basisDistro == [] %}
+<h3>No Basis of record value found, could not build graphs</h3>
+{% else %}
+{% endif %}
+
+</div></td></tr><tr><td>
+<div id="kingdomchart_div" style="width: 900px; height: 500px;">
+{% if kingdomDistro == [] %}
+<h3>No Kingdom value found, could not build graphs</h3>
+{% else %}
+{% endif %}
+
+</div></td></tr><tr><td>
+<div id="countrychart_div" style="width: 900px; height: 500px;">
+{% if countryDistro == [] %}
+<h3>No Country value found, could not build graphs</h3>
+{% else %}
+{% endif %}
+
+</div></td>
+</tr></table>
+
