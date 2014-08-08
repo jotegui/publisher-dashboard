@@ -238,6 +238,7 @@ def distinctMultiTerm(dwca, listofterms):
 if __name__ == "__main__":
 	
 	from vertnet_cred import *
+	dwca_path='/home/jotegui/Projects/VertNet/PublisherDashboard/DWCAs/'
 	
 	#dwca = dwca2list(dwca_path+'isu_mammals.zip')
 	#listOfTerms = listOfTerms(dwca)
